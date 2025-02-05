@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --background-color: #f4f5f7;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .navigation-wrap {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .hamburger span {
+            height: 3px;
+            width: 25px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-link i {
+            margin-right: 5px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .table-responsive {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(37, 117, 252, 0.1);
+        }
+
+        .alert-dark {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            color: #343a40;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .table a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .table a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .navbar-nav {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                flex-direction: column;
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                width: 100%;
+                height: 100vh;
+                justify-content: center;
+                align-items: center;
+                transition: 0.3s;
+                z-index: 50;
+            }
+
+            .navbar-nav.active {
+                right: 0;
+            }
+
+            .navbar-nav .nav-item {
+                margin: 20px 0;
+            }
+
+            .navbar-nav .nav-link {
+                font-size: 1.5rem;
+            }
+
+            .table {
+                font-size: 14px;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navigation-wrap">
+        <nav class="navbar">
+            <a href="{{ url_for('index') }}" class="navbar-brand">Admin</a>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">
+                        <i class="fas fa-home"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/add_tenant">
+                        <i class="fas fa-plus-circle"></i>Create
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2 class="my-4 text-center">Tenants</h2>
+        
+        {% if not tenants %}
+            <div class="alert alert-dark" role="alert">
+                No tenants found. Add your first tenant now!
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Room No</th>
+                            <th scope="col">View</th>
+                            <th scope="col">Rent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tenant in tenants %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ tenant.tenant_name }}</td>
+                            <td>{{ tenant.room_no }}</td>
+                            <td><a href="/tenant/{{tenant.tenant_name}}">info</a></td>
+                            <td><a href="/rent/{{tenant.tenant_name}}">rent</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.navbar-nav').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
