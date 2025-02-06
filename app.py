@@ -82,7 +82,6 @@ def login():
     return render_template('login.html')
 
 @app.route('/register', methods=['POST', 'GET'])
-@login_required
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('add_tenant'))
